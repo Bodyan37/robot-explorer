@@ -16,12 +16,14 @@ public class PlayerController : MonoBehaviour
     private float nextMap = 0.0F;
     private GameObject q;
     private bool flag = true;
+    private bool autofire;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         //Invoke("Example", 0.3f);
         q = GameObject.Find("Quad");
+        autofire = false;
     }
 
     private void Update()
@@ -36,6 +38,16 @@ public class PlayerController : MonoBehaviour
             nextMap = Time.time + mapRate;
             flag = !flag;
             q.SetActive(flag);
+        }
+        if (Input.GetButton("Fire2") && Time.time > nextMap)
+        {
+            nextMap = Time.time + mapRate;
+            autofire = !autofire;
+        }
+            if (autofire && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(lazer, lazerSpawn.position, lazerSpawn.rotation);
         }
     }
 
