@@ -8,16 +8,40 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private int i = 0;
     private int j = 0;
+    public GameObject lazer;
+    public Transform lazerSpawn;
+    public float fireRate = 0.1F;
+    public float mapRate = 0.5F;
+    private float nextFire = 0.0F;
+    private float nextMap = 0.0F;
+    private GameObject q;
+    private bool flag = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Invoke("Example", 0.3f);
+        //Invoke("Example", 0.3f);
+        q = GameObject.Find("Quad");
+    }
+
+    private void Update()
+    {
+        if (Input.GetButton("Jump") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(lazer, lazerSpawn.position, lazerSpawn.rotation);
+        }
+        if (Input.GetButton("Fire3") && Time.time > nextMap)
+        {
+            nextMap = Time.time + mapRate;
+            flag = !flag;
+            q.SetActive(flag);
+        }
     }
 
     void Example()
     {
-        transform.position = new Vector3(i-9, 0.5f, j-9);
+        transform.position = new Vector3(i - 9, 0.5f, j - 9);
         j += (i + 1) / 19;
         i = (i + 1) % 19;
         Invoke("Example", 0.3f);
@@ -26,13 +50,13 @@ public class PlayerController : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-        print(Input.anyKeyDown.ToString());
-        Vector3 movement = new Vector3(5, 0.0f, 5);
-        if (Input.anyKeyDown)
+
+        if (moveVertical != 0)
         {
-            transform.position = new Vector3(i, 0.5f, i);
-            i++;
+            rb.MovePosition(rb.transform.position + rb.transform.forward * Time.deltaTime * moveVertical);
         }
-        //transform.position = new Vector3(rb.position.x+moveHorizontal, rb.position.y, rb.position.z+moveVertical);
+
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, moveHorizontal * 2, 0.0f));
+
     }
 }
