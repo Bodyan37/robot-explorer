@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     private Rigidbody rb;
-    private int i = 0;
-    private int j = 0;
     public GameObject lazer;
     public Transform lazerSpawn;
     public float fireRate = 0.1F;
@@ -51,13 +49,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Example()
-    {
-        transform.position = new Vector3(i - 9, 0.5f, j - 9);
-        j += (i + 1) / 19;
-        i = (i + 1) % 19;
-        Invoke("Example", 0.3f);
-    }
     private void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -71,4 +62,5 @@ public class PlayerController : MonoBehaviour
         rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, moveHorizontal * 2, 0.0f));
 
     }
+
 }
