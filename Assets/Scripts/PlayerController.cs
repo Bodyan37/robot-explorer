@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private GameObject q;
     private bool flag = true;
     private bool autofire;
+    public Animator animator;
 
     void Start()
     {
@@ -56,8 +57,16 @@ public class PlayerController : MonoBehaviour
 
         if (moveVertical != 0)
         {
+            
             rb.MovePosition(rb.transform.position + rb.transform.forward * Time.deltaTime * moveVertical);
         }
+
+        if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
+        {
+            animator.SetBool("Moving", true);
+        }
+        else animator.SetBool("Moving", false);
+
 
         rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, moveHorizontal * 2, 0.0f));
 
