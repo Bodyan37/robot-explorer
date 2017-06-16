@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private bool flag = true;
     private bool autofire;
     public Animator animator;
+    private bool turning = false;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetButton("Jump") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
         {
             nextMap = Time.time + mapRate;
             autofire = !autofire;
+            turning = !turning;
         }
             if (autofire && Time.time > nextFire)
         {
@@ -54,7 +57,11 @@ public class PlayerController : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-
+        if (turning)
+        {
+            print(turning);
+            rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, 0.04f, 0.0f));
+        }
         if (moveVertical != 0)
         {
             

@@ -14,6 +14,7 @@ public class testSprite : MonoBehaviour
         v = Points.pointsList;
         //texture
 
+
     }
 
     void Update()
@@ -54,7 +55,7 @@ public class testSprite : MonoBehaviour
         {
             for (int j = 0; j < 251; j++)
             {
-                texture.SetPixel(i, j, Color.gray);
+                texture.SetPixel(i, j, Color.white);
 
             }
         }
